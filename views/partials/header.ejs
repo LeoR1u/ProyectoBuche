@@ -1,0 +1,26 @@
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="/" class="logo">
+                
+                <h1>Lego&apos;s Store</h1>
+            </a>
+            
+            <nav class="nav">
+                <a href="/">Productos</a>
+                
+                <% if (usuario) { %>
+                    <a href="/carrito">Mi Carrito</a>
+                    <a href="/historial">Mis Compras</a>
+                    <div class="user-menu">
+                        <span>Hola, <%= usuario.nombre %></span>
+                        <a href="/logout" class="btn btn-small btn-secondary">Cerrar Sesión</a>
+                    </div>
+                <% } else { %>
+                    <a href="/login" class="btn btn-small btn-primary">Iniciar Sesión</a>
+                    <a href="/registro" class="btn btn-small btn-success">Registrarse</a>
+                <% } %>
+            </nav>
+        </div>
+    </div>
+</header>

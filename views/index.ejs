@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coppeln&apos;t</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <main class="container">
+        <h1>Productos Disponibles</h1>
+        
+        <div class="productos-grid">
+            <% productos.forEach(producto => { %>
+                <div class="producto-card">
+                    <div class="producto-imagen">
+                        <img src="/images/<%= producto.imagen %>" alt="<%= producto.nombre %>" onerror="this.src='/images/placeholder.jpg'">
+                    </div>
+                    <div class="producto-info">
+                        <h3><%= producto.nombre %></h3>
+                        <p class="producto-descripcion"><%= producto.descripcion %></p>
+                        <div class="producto-footer">
+                            <span class="precio">$<%= parseFloat(producto.precio).toFixed(2) %></span>
+                        </div>
+                        <% if (usuario) { %>
+                            <% if (producto.stock > 0) { %>
+                                <form action="/carrito/agregar" method="POST">
+                                    <input type="hidden" name="producto_id" value="<%= producto.id %>">
+                                    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                                </form>
+                            <% } else { %>
+                                <button class="btn btn-disabled" disabled>Sin Stock</button>
+                            <% } %>
+                        <% } else { %>
+                            <a href="/login" class="btn btn-secondary">Inicia sesión para comprar</a>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

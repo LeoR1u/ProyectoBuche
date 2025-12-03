@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <main class="container">
+        <h1>Mi Carrito de Compras</h1>
+
+        <% if (items.length === 0) { %>
+            <div class="empty-cart">
+                <p>Tu carrito está vacío</p>
+                <a href="/" class="btn btn-primary">Ir a comprar</a>
+            </div>
+        <% } else { %>
+            <div class="carrito-container">
+                <table class="carrito-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Subtotal</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% items.forEach(item => { %>
+                            <tr>
+                                <td>
+                                    <div class="producto-carrito">
+                                        <img src="/images/<%= item.imagen %>" alt="<%= item.nombre %>" onerror="this.src='/images/placeholder.jpg'">
+                                        <span><%= item.nombre %></span>
+                                    </div>
+                                </td>
+                                <td>$<%= parseFloat(item.precio).toFixed(2) %></td>
+                                <td>
+                                    <form action="/carrito/actualizar" method="POST" class="cantidad-form">
+                                        <input type="hidden" name="item_id" value="<%= item.id %>">
+                                        <input type="number" name="cantidad" value="<%= item.cantidad %>" min="1" max="<%= item.stock %>" onchange="this.form.submit()">
+                                    </form>
+                                </td>
+                                <td>$<%= (item.precio * item.cantidad).toFixed(2) %></td>
+                                <td>
+                                    <form action="/carrito/eliminar" method="POST">
+                                        <input type="hidden" name="item_id" value="<%= item.id %>">
+                                        <button type="submit" class="btn btn-danger btn-small">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+
+                <div class="carrito-resumen">
+                    <h2>Resumen de la Compra</h2>
+                    <div class="total-line">
+                        <span>Total:</span>
+                        <span class="total-amount">$<%= total.toFixed(2) %></span>
+                    </div>
+                    <form action="/comprar" method="POST">
+                        <button type="submit" class="btn btn-success btn-block">Realizar Compra</button>
+                    </form>
+                    <a href="/" class="btn btn-secondary btn-block">Seguir Comprando</a>
+                </div>
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

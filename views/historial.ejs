@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Compras</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+
+    <main class="container">
+        <h1>Mi Historial de Compras</h1>
+
+        <% if (compras.length === 0) { %>
+            <div class="empty-history">
+                <p>No tienes compras registradas</p>
+                <a href="/" class="btn btn-primary">Ir a comprar</a>
+            </div>
+        <% } else { %>
+            <table class="historial-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% compras.forEach(compra => { %>
+                        <tr>
+                            <td>#<%= compra.id %></td>
+                            <td><%= new Date(compra.fecha_compra).toLocaleString() %></td>
+                            <td>$<%= parseFloat(compra.total).toFixed(2) %></td>
+                            <td>
+                                <a href="/compra/<%= compra.id %>" class="btn btn-small btn-primary">Ver Detalles</a>
+                                <a href="/compra/<%= compra.id %>/pdf" class="btn btn-small btn-secondary" target="_blank">Descargar PDF</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

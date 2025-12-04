@@ -319,7 +319,6 @@ async function generarTicketPDF(compra) {
         
         doc.fontSize(20).text('------------------------------------------', { align: 'center' });
         doc.fontSize(20).text('Lego Store', { align: 'center' });
-        doc.fontSize(10).text('Empeora tu vida :)', { align: 'center' });
         doc.fontSize(20).text('-------------------------------------------', { align: 'center' });
         doc.moveDown();
         doc.fontSize(20).text('TICKET', { align: 'center' });
